@@ -1,0 +1,43 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="common_header">
+
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Muscade</title>
+
+
+    <!-- Bootstrap Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" />
+    <!-- Bootstrap Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css"/>
+
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" type="text/css"
+          href="//cdn.datatables.net/plug-ins/3cfcc339e89/integration/bootstrap/3/dataTables.bootstrap.css"/>
+
+    <link rel="stylesheet" type="text/css" href="../static/css/style.css" th:href="@{/css/style.css}" />
+    <link rel="stylesheet" type="text/css" media="print" href="../static/css/print.css" th:href="@{/css/print.css}" />
+
+
+    <script src="../static/js/main.js" th:src="@{/js/main.js}"></script>
+
+    <!-- Bootstrap Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="../static/css/full_screen.css" th:href="@{/css/full_screen.css}" />
+</head>
+<body>
+<div class='btn-toolbar pull-right'>
+    <div class='btn-group'>
+        <a href="" th:href="@{/recipe/{id}(id=${recipe.id})}" class='btn btn-primary hidden-print'><span class="glyphicon glyphicon-resize-small"></span></a>
+    </div>
+</div>
+<div class="page-header">
+    <h1 style="float:left;" th:text="${recipe.name}"></h1>
+</div>
+
+<div class="row" style="clear:both;" th:replace="view_recipe :: output">
+</div>
+</body>
+</html>

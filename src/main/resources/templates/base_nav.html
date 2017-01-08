@@ -1,0 +1,37 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<body id="body">
+<div th:fragment="common_nav">
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Muscade</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+            <form class="navbar-form navbar-right" role="search" action="/search" th:action="@{/search}">
+                <div class="form-group">
+                    <input type="text" class="form-control" name="query" placeholder="Recherche"/>
+                </div>
+            </form>
+            <ul class="nav navbar-nav">
+                <li><a href="list.html" th:href="@{/list}">Liste</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Catégories<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li th:each="cat : ${cats}"><a href="/list.html" th:href="@{/category/{id}(id=${cat.id})}" th:text="${cat.name}"></a></li>
+                    </ul>
+                </li>
+                <li><a href="/upload" th:href="@{/upload}">Importer</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class=" extra-top-padding"></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="base :: common_header">
+</head>
+<body>
+<nav th:replace="base_nav :: common_nav"></nav>
+<div class="container">
+    <div class='page-header'>
+        <div class='btn-toolbar pull-right' style="margin-top:20px;">
+            <div class='btn-group'>
+                <a href="#" th:href="@{/multiple/{ids}(ids=${ids})}" class='btn btn-primary'><span class="glyphicon glyphicon-th-list"></span></a>
+            </div>
+            <div class='btn-group'>
+                <a href="#" th:href="@{/export/{ids}(ids=${ids})}" class='btn btn-primary'><span class="glyphicon glyphicon-save"></span></a>
+            </div>
+            <div class='btn-group'>
+                <a href="#" th:href="@{/add}" class='btn btn-success'><span class="glyphicon glyphicon-plus-sign"></span></a>
+            </div>
+        </div>
+        <h1 th:if="${title}" th:text="${title}"></h1>
+        <h1 th:unless="${title}">Liste des recettes</h1>
+    </div>
+    <table id="table_list" class="table">
+        <thead>
+        <tr>
+            <th>Nom</th>
+            <th th:if="${showCategory}">Catégorie</th>
+            <th th:if="${showSource}">Source</th>
+            <th>Note</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr th:each="recipe : ${recipes}">
+            <td><a href="" th:href="@{/recipe/{id}(id=${recipe.id})}" th:text="${recipe.name}"></a></td>
+            <td th:if="${showCategory}" th:text="${recipe.category}"></td>
+            <td th:if="${showSource}" th:text="${recipe.source}"></td>
+            <td>
+                <span style="white-space: nowrap;">
+                    <span th:if="${recipe.rating ge 2}"><span th:each="star:${#numbers.sequence(1,recipe.starCount)}" class="star-icon full">☆</span></span>
+                    <span th:if="(${recipe.rating} ?: 0) % 2" class="star-icon half">☆</span>
+                </span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <script>
+            $(document).ready( function () {
+                $('#table_list').DataTable( {
+                    "dom" : 'ftp',
+                    "language": {
+                        "url": "//cdn.datatables.net/plug-ins/3cfcc339e89/i18n/French.json"
+                    }
+                });
+            } );
+
+    </script>
+</div>
+</body>
+</html>

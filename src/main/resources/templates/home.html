@@ -1,0 +1,37 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="base :: common_header">
+</head>
+<body>
+<nav th:replace="base_nav :: common_nav"></nav>
+<div class="container">
+    <div class='page-header'>
+        <div class='btn-toolbar pull-right' style="margin-top:20px;">
+            <div class='btn-group'>
+                <a href="/add" th:href="@{/add}" class='btn btn-success'><span class="glyphicon glyphicon-plus-sign"></span></a>
+            </div>
+        </div>
+        <h1>Accueil</h1>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            <ul class="list-group">
+                <li class="list-group-item active"><h4 class="no-margin">Catégories</h4></li>
+                <li class="list-group-item" th:each="cat : ${cats}"><a href="/list.html" th:href="@{/category/{id}(id=${cat.id})}" th:text="${cat.name} + ' (' + ${cat.recipes.size()} + ')'"></a></li>
+            </ul>
+        </div>
+        <div class="col-sm-4">
+            <ul class="list-group">
+                <li class="list-group-item active"><h4 class="no-margin">Sources</h4></li>
+                <li class="list-group-item" th:each="source : ${sources}"><a href="#" th:href="@{/source/{name}(name=${source.name})}" th:text="${source.name} + ' (' + ${source.itemCount} + ')'"></a></li>
+            </ul>
+        </div>
+        <div class="col-sm-4">
+            <ul class="list-group">
+                <li class="list-group-item active"><h4 class="no-margin">Meilleures</h4></li>
+                <li class="list-group-item" th:each="best : ${bests}"><a href="#" th:href="@{/recipe/{id}(id=${best.id})}" th:text="${best.name}"></a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>

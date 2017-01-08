@@ -1,0 +1,83 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="base :: common_header">
+</head>
+<body>
+<nav th:replace="base_nav :: common_nav"></nav>
+<div class="container" th:fragment="recipe_frag (recipe, multiple)">
+    <div class="page-header">
+        <div class='btn-toolbar pull-right' style="margin-top:20px;">
+            <div th:if="${multiple}" class='btn-group'>
+                <a href="#" th:onclick="'getElementById(\'body\').insertBefore(nextDivSibling(getElementById(\'recipe' + ${recipe.id} + '\')), getElementById(\'recipe' + ${recipe.id} + '\'));'" class='btn btn-primary hidden-print'><span class="glyphicon glyphicon-arrow-down"></span></a>
+            </div>
+            <div th:if="${multiple}" class='btn-group'>
+                <a href="#" th:onclick="'getElementById(\'body\').insertBefore(getElementById(\'recipe' + ${recipe.id}+'\'), previousDivSibling(getElementById(\'recipe' + ${recipe.id}+'\')));'" class='btn btn-primary hidden-print'><span class="glyphicon glyphicon-arrow-up"></span></a>
+            </div>
+            <div th:if="${multiple}" class='btn-group'>
+                <a href="#" th:onclick="'getElementById(\'body\').removeChild(getElementById(\'recipe' + ${recipe.id}+'\'));'" onclick="" class='btn btn-primary hidden-print'><span class="glyphicon glyphicon-remove-sign"></span></a>
+            </div>
+            <div th:if="${multiple}" class='btn-group'>
+                &nbsp;
+            </div>
+            <div class='btn-group'>
+                <a href="" th:href="@{/edit/{id}(id=${recipe.id})}" class='btn btn-primary hidden-print'><span class="glyphicon glyphicon-pencil"></span></a>
+            </div>
+            <div class='btn-group'>
+                <a href="" th:href="@{/fs/{id}(id=${recipe.id})}" class='btn btn-primary hidden-print'><span class="glyphicon glyphicon-fullscreen"></span></a>
+            </div>
+        </div>
+
+        <h1 style="float:left;" th:text="${recipe.name}"></h1>
+        <div style="padding-top:30px; white-space: nowrap;" class="stars">&nbsp;
+            <span th:if="${recipe.rating ge 2}"><span th:each="star:${#numbers.sequence(1,recipe.starCount)}" class="star-icon full">☆</span></span>
+            <span th:if="(${recipe.rating} ?: 0) % 2" class="star-icon half">☆</span>
+        </div>
+        <ol class="breadcrumb hidden-print" style="clear:both;">
+            <li><a href="/list" th:href="@{/list}">Toutes</a></li>
+            <li><a href="/list" th:href="@{/category/{id}(id=${recipe.category.id})}" th:text="${recipe.category.name}"></a></li>
+            <li th:text="${recipe.name}"></li>
+        </ol>
+
+        <div class="row">
+            <div class="col-xs-12">
+                <table class="table" id="summary">
+                    <tbody>
+                    <tr>
+                        <th th:if="${recipe.source}">Source</th>
+                        <th th:if="${recipe.preparationTime}">Préparation</th>
+                        <th th:if="${recipe.cookingTime}">Cuisson</th>
+                        <th th:if="${recipe.portion}">Portions</th>
+                    </tr>
+                    <tr>
+                        <td><a th:href="@{/source/{name}(name=${recipe.source})}" th:if="${recipe.source}" th:text="${recipe.source}"></a></td>
+                        <td th:if="${recipe.preparationTime}" th:text="${recipe.preparationTime}"></td>
+                        <td th:if="${recipe.cookingTime}" th:text="${recipe.cookingTime}"></td>
+                        <td th:if="${recipe.portion}" th:text="${recipe.portion}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div> <!-- header -->
+
+    <div class="row" style="clear:both;" th:fragment="output">
+        <div class="col-sm-5">
+            <ul class="list-group ingredient">
+                <li class="list-group-item active"><h4 class="no-margin">Ingrédients</h4></li>
+                <li class="list-group-item togglable" th:each="ingredient : ${recipe.ingredients}" th:text="${ingredient}"></li>
+            </ul>
+        </div>
+        <div class="col-sm-7">
+            <ol class="list-group steps">
+                <li class="list-group-item active"><h4 class="no-margin">Instructions</h4></li>
+                <li class="list-group-item togglable" th:each="instruction : ${recipe.instructions}" th:text="${instruction}"></li>
+            </ol>
+        </div>
+        <script>
+            $('.togglable').on('click', function(e) {
+                  $(this).toggleClass("done");
+                });
+        </script>
+    </div>
+</div>
+</body>
+</html>

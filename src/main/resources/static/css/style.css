@@ -1,0 +1,56 @@
+.extra-top-padding {
+    padding-top: 50px;
+}
+
+.page-header{
+    padding-top:0;
+    margin:0 0 20px
+}
+
+.alert {
+    margin-left:10px;
+    margin-right:10px;
+}
+
+.no-margin {
+    margin: 0;
+}
+
+table.table {
+    margin-bottom: 0;
+}
+
+/* Datatable custom css */
+div.dataTables_info {
+    white-space: normal;
+}
+
+.done {
+    color: #DDD;
+}
+
+/* STARS */
+.star-icon {
+    color: #ddd;
+    font-size: 1.3em;
+    position: relative;
+}
+.star-icon.full:before {
+    text-shadow: 0 0 2px rgba(0,0,0,0.7);
+    color: #FDE16D;
+    content: '\2605'; /* Full star in UTF-8 */
+    position: absolute;
+    left: 0;
+}
+.star-icon.half:before {
+    text-shadow: 0 0 2px rgba(0,0,0,0.7);
+    color: #FDE16D;
+    content: '\2605'; /* Full star in UTF-8 */
+    position: absolute;
+    left: 0;
+    width: 50%;
+    overflow: hidden;
+}
+
+
+/* END STARS */

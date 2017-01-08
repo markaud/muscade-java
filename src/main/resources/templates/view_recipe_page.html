@@ -1,0 +1,10 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="base :: common_header">
+</head>
+<body id="body">
+<nav th:replace="base_nav :: common_nav"></nav>
+<div class="container" th:each="recipe : ${recipes}" th:id="'recipe' + ${recipe.id}">
+    <div th:replace="view_recipe :: recipe_frag(${recipe}, ${multiple})"></div>
+</div>
+</body>
+</html>
