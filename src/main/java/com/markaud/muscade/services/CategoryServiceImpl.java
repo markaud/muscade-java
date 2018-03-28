@@ -6,6 +6,9 @@ import com.markaud.muscade.repositories.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.Optional;
+
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
@@ -22,12 +25,12 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public Category getCategoryById(Integer id) {
-        return categoryRepository.findOne(id);
+    public Optional<Category> getCategoryById(Integer id) {
+        return categoryRepository.findById(id);
     }
 
     @Override
     public Iterable<Recipe> listAllRecipeByCategory(Integer categoryId) {
-        return getCategoryById(categoryId).getRecipes();
+        return getCategoryById(categoryId).map(Category::getRecipes).orElse(Collections.emptyList());
     }
 }

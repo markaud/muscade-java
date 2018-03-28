@@ -62,7 +62,7 @@ public class FileUtils {
         public ParserState populateRecipeFromLine(Recipe recipe, String line) {
             if (line != null) {
                 String[] values = line.trim().split("\t");
-                recipe.setCategory(categoryService.getCategoryById(Integer.parseInt(values[0])));
+                recipe.setCategory(categoryService.getCategoryById(Integer.parseInt(values[0])).orElse(null));
                 recipe.setSource(values[1]);
 
                 try {

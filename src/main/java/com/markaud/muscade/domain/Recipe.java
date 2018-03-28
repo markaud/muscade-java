@@ -8,18 +8,15 @@ import java.util.List;
 
 @Entity
 
-@SqlResultSetMapping(
-        name = "sourceStatistic",
-        classes = {
-                @ConstructorResult(
-                        targetClass = SourceStatistic.class,
-                        columns = {
-                                @ColumnResult(name = "name", type = String.class),
-                                @ColumnResult(name = "itemCount", type = Integer.class)
-                        }
-                )
-        }
-)
+@SqlResultSetMappings({
+        @SqlResultSetMapping(
+                name="sourceStatistic",
+                columns= {
+                        @ColumnResult(name = "name", type = String.class),
+                        @ColumnResult(name = "itemCount", type = Integer.class)
+                }
+        )
+})
 
 @NamedNativeQuery(name = "Recipe.listSourceStatistic", query = "select source as name, count(id) as itemCount from recipe where LENGTH(source) > 0 group by source order by itemCount DESC ", resultSetMapping = "sourceStatistic")
 public class Recipe {

@@ -1,7 +1,7 @@
 package com.markaud.muscade.services;
 
 import com.markaud.muscade.domain.Recipe;
-import com.markaud.muscade.domain.SourceStatistic;
+import com.markaud.muscade.domain.ISourceStatistic;
 import com.markaud.muscade.repositories.RecipeRepository;
 import com.markaud.muscade.utils.FileUtils;
 import com.markaud.muscade.utils.StringUtils;
@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Optional;
 
 @Service
 public class RecipeServiceImpl implements RecipeService {
@@ -61,19 +62,21 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public Iterable<Recipe> listRecipeById(Collection<Integer> ids) {
-        return recipeRepository.findAll(ids);
+        return recipeRepository.findAllById(ids);
     }
 
     @Override
     public Iterable<Recipe> listBestRecipe(Integer count) {
-        Iterable<Recipe> recipeIterable = recipeRepository.findAll(new Sort(Sort.Direction.DESC, "rating" ));
+        Iterable<Recipe> recipeIterable = recipeRepository.findAll(new Sort(Sort.Direction.DESC,  "rating" ));
         ArrayList<Recipe> recipes = new ArrayList<>(count);
         int i=0;
 
         for (Recipe recipe : recipeIterable) {
-            recipes.add(recipe);
-            if (++i >= count) {
-                break;
+            if (recipe.getRating() != null) {
+                recipes.add(recipe);
+                if (++i >= count) {
+                    break;
+                }
             }
         }
 
@@ -81,12 +84,12 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public Iterable<SourceStatistic> listBestSources(Integer count) {
-        Iterable<SourceStatistic> statisticIterable = recipeRepository.listSourceStatistic();
-        ArrayList<SourceStatistic> result = new ArrayList<>(count);
+    public Iterable<ISourceStatistic> listBestSources(Integer count) {
+        Iterable<ISourceStatistic> statisticIterable = recipeRepository.listSourceStatistic();
+        ArrayList<ISourceStatistic> result = new ArrayList<>(count);
         int i=0;
 
-        for (SourceStatistic ss : statisticIterable) {
+        for (ISourceStatistic ss : statisticIterable) {
             result.add(ss);
             if (++i >= count) {
                 break;
@@ -97,8 +100,8 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public Recipe getRecipeById(Integer id) {
-        return recipeRepository.findOne(id);
+    public Optional<Recipe> getRecipeById(Integer id) {
+        return recipeRepository.findById(id);
     }
 
     @Override
@@ -108,13 +111,13 @@ public class RecipeServiceImpl implements RecipeService {
 
     @Override
     public void deleteRecipe(Integer id) {
-        recipeRepository.delete(id);
+        recipeRepository.deleteById(id);
     }
 
     @Override
     public Iterable<Recipe> importRecipes(InputStream inputStream) {
         Iterable<Recipe> recipes = fileUtils.loadRecipesFromFile(inputStream);
-        recipeRepository.save(recipes);
+        recipeRepository.saveAll(recipes);
         return recipes;
     }
 

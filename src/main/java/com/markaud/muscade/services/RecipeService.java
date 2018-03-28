@@ -1,10 +1,11 @@
 package com.markaud.muscade.services;
 
 import com.markaud.muscade.domain.Recipe;
-import com.markaud.muscade.domain.SourceStatistic;
+import com.markaud.muscade.domain.ISourceStatistic;
 
 import java.io.InputStream;
 import java.util.Collection;
+import java.util.Optional;
 
 public interface RecipeService {
     Iterable<Recipe> listAllRecipe();
@@ -14,9 +15,9 @@ public interface RecipeService {
     Iterable<Recipe> listRecipeById(Collection<Integer> ids);
     Iterable<Recipe> listBestRecipe(Integer count);
 
-    Iterable<SourceStatistic> listBestSources(Integer count);
+    Iterable<ISourceStatistic> listBestSources(Integer count);
 
-    Recipe getRecipeById(Integer id);
+    Optional<Recipe> getRecipeById(Integer id);
 
     Recipe saveRecipe(Recipe recipe);
 
